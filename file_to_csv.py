@@ -48,13 +48,13 @@ for i in all_paths_files:
             lines = f.readlines()
             lines = [line.rstrip('\n') for line in lines]
             if '' not in lines[2:3]:
-                date_list.append(lines[2:3])
-                headlines_list.append(lines[0:1])
-                text_list.append(' '.join(lines[4:]))  # need to remove everything after 'To contact the editor responsible'
+                date_list.append(''.join(lines[2:3]))
+                headlines_list.append(''.join(lines[0:1]))
+                text_list.append(''.join(lines[4:]))  # need to remove everything after 'To contact the editor responsible'
             else:
-                date_list.append(lines[5:6])
-                headlines_list.append(lines[1:2])
-                text_list.append(' '.join(lines[8:]))
+                date_list.append(''.join(lines[5:6]))
+                headlines_list.append(''.join(lines[1:2]))
+                text_list.append(''.join(lines[8:]))
     except UnicodeDecodeError:
         print('Unicode Error')
 
@@ -64,4 +64,4 @@ df['date'] = date_list
 df['text'] = text_list
 
 print(df)
-df.to_csv('/Users/rohan/Documents/Grad School/coursework/winter/ML & NLP/project_code/data/results/bloomberg.csv')
+# df.to_csv('/Users/rohan/Documents/Grad School/coursework/winter/ML & NLP/project_code/data/results/bloomberg.csv')
