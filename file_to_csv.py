@@ -14,8 +14,8 @@ bloomberg_path = '/Users/rohan/Documents/Grad School/Coursework/Winter/ML & NLP/
 GET THE COMPLETE PATH AND FILES
 """
 
-path_pth = [pth for pth, dirs, files in os.walk(bloomberg_path)]
-path_files = [files for pth, dirs, files in os.walk(bloomberg_path)]
+path_pth = [pth for pth, dirs, files in os.walk(reuters_path)]
+path_files = [files for pth, dirs, files in os.walk(reuters_path)]
 
 all_files = []
 all_paths = []
@@ -39,7 +39,7 @@ ticker_list = []
 
 for i in all_paths:
     ticker_list.append(os.path.basename(os.path.normpath(i)))
-df['Ticker'] = ticker_list
+df['Ticker'] = ticker_list[6:]
 
 for i in all_paths_files:
     try:
@@ -64,4 +64,4 @@ df['date'] = date_list
 df['text'] = text_list
 
 print(df)
-# df.to_csv('/Users/rohan/Documents/Grad School/coursework/winter/ML & NLP/project_code/data/results/bloomberg.csv')
+# df.to_csv('/Users/rohan/Documents/Grad School/coursework/winter/ML & NLP/project_code/data/results/reuters.csv')

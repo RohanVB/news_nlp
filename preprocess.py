@@ -9,15 +9,15 @@ bloomberg_df = pd.read_csv('/Users/rohan/Documents/Grad School/coursework'
 reuters_df = pd.read_csv('/Users/rohan/Documents/Grad School/coursework/'
                          'winter/ML & NLP/project_code/data/results/reuters.csv')
 
+DATAFRAME = reuters_df
 
 def headlines_fix(filename):
     my_list = []
     for i in filename:
         my_list.append(str(i).replace('--', ''))
-    bloomberg_df['headlines'] = my_list
-    print(bloomberg_df)
+    DATAFRAME['headlines'] = my_list
 
-def datetime_fix(filename):
+def datetime_fix_bloomberg(filename):
     my_list = []
     for i in filename:
         match = re.findall(r'\d{4}-\d{2}-\d{2}', str(i))
@@ -26,11 +26,26 @@ def datetime_fix(filename):
                 my_list.append(matches)
         else:
             my_list.append('')
-    bloomberg_df['date'] = my_list
+    DATAFRAME['date'] = my_list
 
+def datetime_fix_reuters(filename):
+    my_list = []
+    for i in filename:
+        match = re.findall(r'(\D{3} \d{1,2}, \d{4})', str(i))
+        # match = datetime.strptime(match.(), '%B %d, %Y')
+        if match:
+            for matches in match:
+                match_value = datetime.strptime(matches, '%b %d, %Y').strftime('%Y-%m-%d')
+                my_list.append(match_value)
+        else:
+            my_list.append('')
+    DATAFRAME['date'] = my_list
 
-headlines_fix(bloomberg_df['headlines'])
-datetime_fix(bloomberg_df['date'])
+headlines_fix(DATAFRAME['headlines'])
+# datetime_fix_bloomberg(DATAFRAME['date'])
+datetime_fix_reuters(DATAFRAME['date'])
 
-bloomberg_df.to_csv('/Users/rohan/Documents/Grad School/coursework/winter/ML & NLP/project_code/'
-                    'data/results/preprocessed_bloomberg.csv')
+print(DATAFRAME)
+
+DATAFRAME.to_csv('/Users/rohan/Documents/Grad School/coursework/winter/ML & NLP/project_code/'
+                 'data/results/preprocessed_reuters.csv')
