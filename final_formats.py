@@ -10,59 +10,63 @@ PATH FOR INPUT NEWS
 reuters_path = '/Users/rohan/Documents/Grad School/Coursework/Winter/ML & NLP/Project_Code/data/results/reuters_task'
 bloomberg_path = '/Users/rohan/Documents/Grad School/Coursework/Winter/' \
                  'ML & NLP/Project_Code/data/results/bloomberg_task'
+marketwatch_path = '/Users/rohan/Documents/Grad School/Coursework/Winter/' \
+                 'ML & NLP/Project_Code/data/results/marketwatch_task'
 
 """
 GET THE COMPLETE PATH AND FILES
 """
 
-# path_pth = [pth for pth, dirs, files in os.walk(reuters_path)]
-# path_files = [files for pth, dirs, files in os.walk(reuters_path)]
-#
-# all_files = []
-# all_paths = []
-# all_paths_files = []
-#
-# for i, n in zip(path_pth, path_files):
-#     for j in n:
-#         all_files.append(j)
-#         all_paths.append(i)
-#         all_paths_files.append(i + '/' + j)
-#
-# all_paths_files = [x for x in all_paths_files if not '.DS' in x]
-# all_paths = [x for x in all_paths if not '.DS' in x]
-#
-#
-# all_vals = []
-# for i in all_paths_files:
-#     val = pd.read_csv(i)
-#     all_vals.append(val)
-#
-# result = pd.concat(all_vals, sort=True)
-# print(result)
-#
-# lbl = result['signal'].value_counts()
-# print(lbl)
-#
-# csv_df = pd.DataFrame()
-#
-# csv_df['timestamp'] = result['timestamp']
-# csv_df['signal'] = result['signal']
-# # csv_df['headlines'] = result['headlines']
-# csv_df['ticker'] = result['ticker_x']
-# csv_df['text'] = result['text']
-#
-# csv_df.sort_values(by=['timestamp'], inplace=True, ascending=True)
-#
-# print(csv_df)
-# csv_df.to_csv('/Users/rohan/Documents/Grad School/Coursework/Winter/'
-#               'ML & NLP/Project_Code/data/results/reuters_labeled.csv')
+path_pth = [pth for pth, dirs, files in os.walk(marketwatch_path)]
+path_files = [files for pth, dirs, files in os.walk(marketwatch_path)]
+
+all_files = []
+all_paths = []
+all_paths_files = []
+
+for i, n in zip(path_pth, path_files):
+    for j in n:
+        all_files.append(j)
+        all_paths.append(i)
+        all_paths_files.append(i + '/' + j)
+
+all_paths_files = [x for x in all_paths_files if not '.DS' in x]
+all_paths = [x for x in all_paths if not '.DS' in x]
+
+
+all_vals = []
+for i in all_paths_files:
+    val = pd.read_csv(i)
+    all_vals.append(val)
+
+result = pd.concat(all_vals, sort=True)
+print(result)
+
+lbl = result['signal'].value_counts()
+print(lbl)
+
+csv_df = pd.DataFrame()
+
+csv_df['timestamp'] = result['timestamp']
+csv_df['signal'] = result['signal']
+# csv_df['headlines'] = result['headlines']
+csv_df['ticker'] = result['ticker_x']
+csv_df['text'] = result['text']
+
+csv_df.sort_values(by=['timestamp'], inplace=True, ascending=True)
+
+print(csv_df)
+csv_df.to_csv('/Users/rohan/Documents/Grad School/Coursework/Winter/'
+              'ML & NLP/Project_Code/data/results/marketwatch_labeled.csv')
 
 df1 = pd.read_csv('/Users/rohan/Documents/Grad School/Coursework/Winter/'
-                  'ML & NLP/Project_Code/data/results/bloomberg_labeled.csv')
+                  'ML & NLP/Project_Code/data/results/reuters_labeled.csv')
 df2 = pd.read_csv('/Users/rohan/Documents/Grad School/Coursework/Winter/'
                   'ML & NLP/Project_Code/data/results/bloomberg_labeled.csv')
+df3 = pd.read_csv('/Users/rohan/Documents/Grad School/Coursework/Winter/'
+                  'ML & NLP/Project_Code/data/results/marketwatch_labeled.csv')
 
-result = pd.concat([df1, df2], sort=True)
+result = pd.concat([df1, df2, df3], sort=True)
 result.sort_values(by=['timestamp'], inplace=True, ascending=True)
 result = result.drop(['Unnamed: 0'], axis=1)
 
