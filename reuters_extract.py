@@ -29,7 +29,7 @@ try:
     all_files.remove('/Users/rohan/Documents/Grad School/Coursework/Winter/ML & NLP/Project_Code/data/reuters/.DS_Store')
     all_paths_short = all_paths[1:101]
     all_paths = all_paths[1:]
-except:
+except FileNotFoundError:
     print('no .DS_Store')
 all_files_short = all_files[:100]
 
@@ -58,8 +58,10 @@ company_list_500 = pd.read_csv('/Users/rohan/Documents/Grad School/Coursework/Wi
 company_list = company_list_500['Value']
 company_list = [x.lower() for x in company_list]
 
+
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
+
 
 threshold = 0.95
 result_list = []
@@ -110,13 +112,10 @@ print('begin file renaming...')
 for original_path, (count, new_name), path_val in zip(df_new['File'], enumerate(df_new['Symbol']), df_new['Path']):
     try:
         if new_name != 'none':
-            # print(path_val + '/{}'.format(new_name), original_path)
             shutil.copy(original_path, path_val + '/{}_{}'.format(new_name, count))
 
         else:
             print('this one is none.')
-            # shutil.move(original_path, path_val + '/{}'.format(new_name))
-    except:
-        print('fail', original_path, path_val, new_name) # error because it already gets turned into `none`
+    except IOError:
+        print('fail', original_path, path_val, new_name)
 
-# todo: If company name exists as file name, then create a directory by company name and put all matching company names in there.
